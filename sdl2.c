@@ -27,7 +27,7 @@ typedef struct rgb_setting {
 
 // 6 to 9
 static rgb_setting dusk = {
-	.starting_time = 0, .duration = 8,
+	.starting_time = 0, .duration = 14,
 	.rgb_start = {0x00, 0xff, 0x00},
 	.rgb_end = {0x00, 0x00, 0xff},
 	.rgb = NULL,
@@ -36,17 +36,17 @@ static rgb_setting dusk = {
 
 // 19 to 22
 static rgb_setting dawn = {
-	.starting_time = 0, .duration = 8,
-	.rgb_start = {0x00, 0x00, 0x00},
-	.rgb_end = {0xff, 0x00, 0x00},
+	.starting_time = 0, .duration = 14,
+	.rgb_start = {0xff, 0x00, 0x00},
+	.rgb_end = {0xff, 0xff, 0x00},
 	.rgb = NULL,
 	.next = NULL
 };
 
 // 9 to 19
 static rgb_setting day = {
-	.starting_time = 0, .duration = 8,
-	.rgb_start = {0xff, 0x00, 0x00},
+	.starting_time = 0, .duration = 14,
+	.rgb_start = {0xff, 0xff, 0x00},
 	.rgb_end = {0x00, 0xff, 0x00},
 	.rgb = NULL,
 	.next = NULL
@@ -54,9 +54,9 @@ static rgb_setting day = {
 
 // 22 to 6
 static rgb_setting night = {
-	.starting_time = 0, .duration = 8,
+	.starting_time = 0, .duration = 14,
 	.rgb_start = {0x00, 0x00, 0xff},
-	.rgb_end = {0x00, 0x00, 0x00},
+	.rgb_end = {0xff, 0x00, 0x00},
 	.rgb = NULL,
 	.next = NULL
 };
@@ -91,10 +91,7 @@ void set_rgb_setting(rgb_setting *setting) {
 	transition_rgb_setting.rgb_start = *(current_rgb_setting->rgb);
 	transition_rgb_setting.rgb_end = setting->rgb_start;
 
-	current_rgb_setting->next = NULL;
 	transition_rgb_setting.next = setting;
-	setting->next = NULL;
-
 	current_rgb_setting = &transition_rgb_setting;
 	pthread_mutex_unlock(&mtx);
 }
